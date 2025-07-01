@@ -1,2 +1,3 @@
 # Ignorando todas pastas venv
 *venv
+*__pycache__

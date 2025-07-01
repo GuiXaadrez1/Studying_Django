@@ -1,6 +1,8 @@
 # Introdução
 
-Esse documento visa explicar como funciona a estrutura inicial que o DJANGO cria ao iniciar um novo projeto! 
+Esse documento visa explicar como funciona a estrutura inicial que o DJANGO cria uma  que é um contêiner que configuraa e organiza várias aplicações (apps) do projeto!
+
+osb.: Essa é a estrutura principal do nosso projeto
 
 # Estrutura dos scripts.py feitas pelos DJANGO:
 
@@ -119,3 +121,4 @@ urls.py: Controla rotas globais.
 wsgi.py/asgi.py: Entradas para servidores web (síncrono/assíncrono).
 
 __init__.py: Torna o diretório um pacote Python.
+
