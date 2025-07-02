@@ -45,8 +45,14 @@ class Entry(models.Model):
     # criando atributos, lembre-se que é opcional criar um construtor
     
     # puxando a FOREIGN KEY da ENTIDADE TOPIC, ligação entre ENTRY E TOPIC
-    topic = models.ForeignKey(Topic, on_delete = models.deletion) # Entry vai ser deletado junto com o atributo pai
+    topic = models.ForeignKey(Topic, on_delete = models.CASCADE) # Entry vai ser deletado junto com o atributo pai
     annotations = models.TextField() # valor ilimitado de caracteres
 
+    # opcional colcoar, porém interessante para corrigir algum bug com Entry no fututo
+    class Meta(): 
+        verbose_name_plural = 'entries'
+    
     def __str__(self):
-        return self.topic, self.annotations
+        return self.topic, self.annotations[:50] + '...' # retornando os primeiro 50 caracteres + ...
+    
+    

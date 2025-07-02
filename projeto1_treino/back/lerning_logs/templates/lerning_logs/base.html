@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Minha Aplicação Django{% endblock title %}</title>
+</head>
+<body>
+    <header>
+        <a href="{% url 'index' %}"><h1>DJANGO-APPLICATION</h1></a>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Conteúdo das páginas vai aqui -->
+        {% endblock content %}
+    </main>
+
+    <footer>
+        <p>Rodapé fixo</p>
+    </footer>
+</body>
+</html>
