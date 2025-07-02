@@ -1,0 +1,22 @@
+{% extends "lerning_logs/base.html" %}
+
+{% block title%} Topicos {% endblock title%}
+
+{% block content %}
+
+    <h1>Só para fazer testes<h1>
+    <p>A operação abaixo vai ser um forloop com JINJA2 com base num valor retornado pelo back-end</p>
+    <ul> <!--Lista não ordenada-->
+        {% for topic in topics %}
+            <li>
+                <a href="{% url 'topic' topic.id %}">{{ topic }}</a>
+            </li> <!--itens das lista -->
+            {% empty %} <!-- valida o incrementador topic está vazio -->
+            <li>Não há tópicos adicionados.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
+
+   
+

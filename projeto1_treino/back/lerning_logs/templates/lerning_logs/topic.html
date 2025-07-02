@@ -1,0 +1,22 @@
+{% extends "lerning_logs/base.html"%}
+
+{% block content %}
+    <h3>Tópicos: {{topic.text}}</h3>
+    <p>anotações: </p>
+    <ul>
+        {% for entry in entries%}
+            <li>
+                <p>data anotação: {{entry.date_added}}</p>
+                <p>anotação:{{entry.annotations}}</p>
+            </li>
+            {% empty %}
+                <li>Não anotações relacionadas com este tópico.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+
+<!-- 
+    Basicamnete fizemos relacionamos cada Tópico com suas respectivas anotações 
+    colocando parâmetros na url
+ 
+-->

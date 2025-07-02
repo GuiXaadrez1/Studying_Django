@@ -6,18 +6,22 @@
     <title>{% block title %}Minha Aplicação Django{% endblock title %}</title>
 </head>
 <body>
-    <header>
-        <a href="{% url 'index' %}"><h1>DJANGO-APPLICATION</h1></a>
+    <header> <!-- Div de cabeçalho da nossa página html -->
+        <nav><!-- Criando uma navbar -->
+            <!--Criando links -->    
+            <a href="{% url 'index' %}"><h1>DJANGO-APPLICATION</h1></a>
+            <a href="{% url 'topics' %}"><h1>Topicos</h1></a>
+        </nav>    
     </header>
 
-    <main>
+    <main> <!-- Div principal da nossa página html -->
         {% block content %}
-        <!-- Conteúdo das páginas vai aqui -->
+        <!-- Conteúdo das páginas filhas vai ser preenchidas aqui aqui -->
         {% endblock content %}
     </main>
 
     <footer>
-        <p>Rodapé fixo</p>
+        <p>Roda pé da página pai</p>
     </footer>
 </body>
 </html>
