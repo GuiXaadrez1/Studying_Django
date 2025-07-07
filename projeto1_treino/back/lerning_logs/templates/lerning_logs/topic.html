@@ -1,8 +1,8 @@
 {% extends "lerning_logs/base.html"%}
 
 {% block content %}
-    <h3>Tópicos: {{topic.text}}</h3>
-    <p>anotações: </p>
+    <h3>Tópicos: ID - {{topic.id}} Nome - {{topic.text}}</h3>
+    <p>Anotações: </p>
     <ul>
         {% for entry in entries%}
             <li>
@@ -13,6 +13,7 @@
                 <li>Não anotações relacionadas com este tópico.</li>
         {% endfor %}
     </ul>
+    <p><a href = "{% url 'new_annotations' topic.id %}">Adicione uma nova anotação para o Tópico </a><p>
 {% endblock content %}
 
 <!-- 

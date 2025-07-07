@@ -1,0 +1,12 @@
+{% extends "lerning_logs/base.html" %}
+
+{% block content %}
+    <!-- Não se esqueça de passa o id do topic, essa é uma forma de passar parâmetros para o url -->
+    <form action="{% url 'new_annotations' topic.id %}" method="post">
+        {% csrf_token %} {# Não esquecer de sempre colocar essa tag de linguagem de templates primeiro! #}
+        {{ form.as_p }}  {# <-- Isso é o que exibe os campos e formata o nosso formulário #}
+        <button name = "submit">Adicionar</button>
+        <p><a href="{% url 'topic' topic.id %}">Estamos inserindo uma anotação para este tópico: {{topic.text}}</a></p>
+    </form>
+{% endblock %}
+

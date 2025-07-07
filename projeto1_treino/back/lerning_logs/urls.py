@@ -1,13 +1,15 @@
 # esse código será responsável pela lógica de roteamento entre as páginas
 
 from django.urls import path
-from . import views
+from . import views # o ponto serve para importar métodos, módulos, arquivos de um mesmo diretório
 
 # toda vez que formos criar um path -> manipulação de diretório, vamos colocar um nome para nossa url
 urlpatterns = [
     path('',views.index, name = 'index'), # o parâmetro name é o nome da nossa url
     path('topics',views.topics, name='topics'),
-    path('topic/<topic_id>/',views.topic, name='topic') # colocando parâmetro na url para ser acessada
+    path('topic/<topic_id>/',views.topic, name='topic'), # colocando parâmetro na url para acessae um tópico específico de topics
+    path('new_topic', views.new_topic, name = 'new_topic'), # criando caminho para o nosso formulário definido em forms.py que é um CREATE do CRUD
+    path('new_annotations/<topic_id>', views.new_annotations, name = 'new_annotations') # mesma coisa do de cima
 ]
 
 '''

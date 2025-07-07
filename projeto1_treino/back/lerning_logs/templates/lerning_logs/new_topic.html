@@ -1,0 +1,24 @@
+{% extends "lerning_logs/base.html"%}
+
+{% block content %}
+    <h1>Formulário para Treinar um Pouco</h1>
+    <p>Esse formulário permite adicionar um Novo Tópico!</p>
+    <form action = "{% url 'new_topic'%}" method = "Post"> <!-- Enviando para a mesma página que está -->
+        {% csrf_token %} <!-- IMPORTANTE É A PRIMEIRA LINHA DENTRO DE UM FORMULÁRIO CRIADO PELO DJANGO, É PRECISSO PASSAR OBRIGATÓRIO-->
+        {{ form.as_p }}  {# <-- Isso é o que exibe os campos e formata o nosso formulário #}
+        <button name = "submit">Adicionar</button>
+    </form>
+{% endblock %}
+
+<!--
+
+    lebrando que dentro de chaves e porcentagem, o url está definido o caminho do arquivo
+
+    parâmetros action -> define o arquivo que receberá os dados preenchidos no formmulário 
+
+    parâmetro method -> define qual é o método http que será passado, Get, Post, Put e etc...
+
+    crsf_token -> É a linguagem de tample obrigatório, para formulário criados em DJANGO, é importante para evitar ataques HACKERS, questão de segurança
+
+
+-->

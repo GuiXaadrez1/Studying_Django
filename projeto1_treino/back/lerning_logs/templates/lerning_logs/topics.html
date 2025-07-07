@@ -9,12 +9,14 @@
     <ul> <!--Lista não ordenada-->
         {% for topic in topics %}
             <li>
-                <a href="{% url 'topic' topic.id %}">{{ topic }}</a>
+                <a href="{% url 'topic' topic.id %}">{{ topic }}</a><!-- O topic.id é uma atributo que puxamos do dicionário retornados da função topics que está na view-->
             </li> <!--itens das lista -->
             {% empty %} <!-- valida o incrementador topic está vazio -->
             <li>Não há tópicos adicionados.</li>
         {% endfor %}
     </ul>
+
+    <a href = "{% url 'new_topic'%}" >Adcionar novos tópicos</a>
 
 {% endblock content %}
 

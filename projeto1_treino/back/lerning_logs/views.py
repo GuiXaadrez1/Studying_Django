@@ -21,13 +21,22 @@ from .models import Topic # importando nossa Classe Topic de models para criar a
 # com base nisso, fazemos a ligação com o banco de dados, pois o banco está relacionado
 # ao model
 
+# Importando método do django que redireciona nossas rotas 
+from django.http import HttpResponseRedirect
+
+# Importando o método reverse, basicamente é vai renderizar nossa página apartir de um nome específico de url
+from django.urls import reverse
+
+# Importando o nosso formulário criado em forms.py
+from .forms import TopicForm, EntryForm
+
 def index(request:HttpRequest)->HttpResponse:
     """Página principal do lerning_log"""
     return render(request, 'lerning_logs/index.html')
 
 # a função render vai renderizar uma página html para o navegador do usuário
 
-# Criando a view topics
+# Criando a view topics, função que retorna todos os nossos topicos
 
 def topics(request: HttpRequest)->HttpResponse: # essa função vai retornar um HttpResponse
     """Página que mostra todos os assuntos """
@@ -40,7 +49,7 @@ def topics(request: HttpRequest)->HttpResponse: # essa função vai retornar um 
 def topic(request:HttpRequest,topic_id:str)->HttpResponse:
     """Página que mostra todos os topicos (assuntos) e as anotações referente ao mesmo"""
     topic_id_convertido = int(topic_id) # convertendo o valor da variável vindo da url
-    topic = Topic.objects.get(id = topic_id_convertido)
+    topic = Topic.objects.get(id = topic_id_convertido) # acessando o banco de dados e retornando os dados pelo id
     entries = topic.entry_set.order_by('-date_added') # ordenando inversamente
     context = {'topic':topic,'entries':entries} 
     return render(
@@ -52,3 +61,60 @@ def topic(request:HttpRequest,topic_id:str)->HttpResponse:
 
 # essa função, view basicamente vai listar um topic com todas as suas anotações com base
 # na variável determinada na url
+
+
+# Criando view que irá renderizar o meu formulário criado em form.py
+def new_topic(request:HttpRequest)->HttpResponse:
+        """ Adiciona um novo Tópico através de um formulário """
+                
+        if request.method != 'POST':
+                # Se nem uma dado for obtido com post; cria-se um formulário em branco
+                
+                form = TopicForm() # materializando a nossa classe que contém o nosso formulário
+        else: 
+                form = TopicForm(request.POST) # passando os dados atráves de um endpoint Post
+                
+                # fazendo validação simples com Django
+                if form.is_valid(): # retorna verdadeiro ou false, se os dados forem verdadeiro retorna True se não False
+                        form.save() # método utilizado para salvar os dados passados pelo enpoint POST
+
+                        return HttpResponseRedirect(reverse('topics')) # usando o método rever para renderizar uma página apartir do nome de uma url
+                        # resumindo essa parte, se os dados enviados via method post for válido e salvar no banco de dados, retornar para a página topics.html 
+        
+        context = {'form':form}
+        return render(request,'lerning_logs/new_topic.html',context,content_type='text/html',status=201)
+
+# Craindo view para o nosso formulário Entryform
+def new_annotations(request:HttpRequest,topic_id:str)->HttpResponse:
+        """ Acrescenta uma nova anotação no banco de dados """
+        topic_id_convertido = int(topic_id)
+        topic = Topic.objects.get(id = topic_id_convertido) # acessando o banco de dados e retorndo dados pelo id, veja, você está pegando um objeto do banco de dados 
+
+        if request.method != 'POST':
+                # nenhum dado submetido, então retorna uma formulário em branco
+                form = EntryForm()
+        else:
+                # dados submetidos, processa os dados
+                form = EntryForm(data=request.POST) # NÃO PEGA todos os dados da requisição, apenas alguns dados 
+                
+                if form.is_valid():
+                        
+                        # criando um objeto form para fazer validação
+                        new_annotation = form.save(commit=False) # salva os dados enviados via POST para o banco de dados
+
+                        # o parâmetro commit = false serve para salvar os dados em um objeto e não diretamente no banco de dados
+                        
+                        new_annotation.topic = topic # acrescentando um novo atributo, chamado topic ao objeto new_annotation que é um topic adquirido pelo banco de dados
+                        
+                        # agora sim vamos fazer um save de fato, inserir, persistir os dados dentro do banco de dados!
+
+                        new_annotation.save()
+        
+                        return HttpResponseRedirect(reverse('topic',args=[topic_id_convertido])) # após validações redirecionar para página topic e passando como argumento da url o id
+        
+        context = {'topic':topic,'form':form}
+        return render(
+                request,
+                'lerning_logs/new_annotations.html',
+                context=context,content_type='text/html',
+                status=200)      
