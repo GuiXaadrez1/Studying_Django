@@ -9,7 +9,8 @@ urlpatterns = [
     path('topics',views.topics, name='topics'),
     path('topic/<topic_id>/',views.topic, name='topic'), # colocando parâmetro na url para acessae um tópico específico de topics
     path('new_topic', views.new_topic, name = 'new_topic'), # criando caminho para o nosso formulário definido em forms.py que é um CREATE do CRUD
-    path('new_annotations/<topic_id>', views.new_annotations, name = 'new_annotations') # mesma coisa do de cima
+    path('new_annotations/<topic_id>', views.new_annotations, name = 'new_annotations'), # mesma coisa do de cima
+    path('edit_annotations/<annotation_id>', views.edit_annotations, name='edit_annotations')
 ]
 
 '''
