@@ -24,5 +24,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),    
-    path('', include('lerning_logs.urls')) 
+    path('', include('lerning_logs.urls')), # criando roteamento para o roteador do nosso projeto de aplicação
+    path('users/',include('users.urls'))
 ]

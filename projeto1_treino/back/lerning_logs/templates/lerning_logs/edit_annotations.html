@@ -1,0 +1,16 @@
+{% extends 'lerning_logs/base.html' %}
+
+{% block content %}
+
+    <p>Id da anotação: {{annotations.id}}</p>
+    <p><a href = "{% url 'topic' topic.id %}">Estamos no Topico: {{topic}} de ID - {{topic.id}} </a><p>
+    <p>Editar anotação: </p>
+    <form action = "{% url 'edit_annotations' annotations.id %}" method = 'post'>
+        {% csrf_token %} {# Sempre criar pela segurança do nosso formulário #}
+        {{ form.as_p }}  {# Formata o nosso Formulário criado pelo forms.py #}
+        <button name = "submit">
+            Atualizar Anotação
+        </button>
+    </form>
+
+{% endblock%}

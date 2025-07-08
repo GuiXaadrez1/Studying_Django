@@ -8,6 +8,7 @@
             <li>
                 <p>data anotação: {{entry.date_added}}</p>
                 <p>anotação:{{entry.annotations}}</p>
+                <p><a href="{% url 'edit_annotations' entry.id %}">Editar anotação</a></p> <!-- Colocando id da anotação para cada anotação-->
             </li>
             {% empty %}
                 <li>Não anotações relacionadas com este tópico.</li>
@@ -20,4 +21,14 @@
     Basicamnete fizemos relacionamos cada Tópico com suas respectivas anotações 
     colocando parâmetros na url
  
+    Aqui no Django temos diferença de escopo no template o id da anotação é annotations.id
+    aqui é entry.id porque estamos rescebendo da view responsável, topic o seguinte contexto:
+
+    context = {'topic':topic,'entries':entries} 
+     
+    e o for que construimos com jinja percorre cada objeto de entries que representa onde vai ter o id da nossa annotations.id
+
+    então devemoos passar o entry.id na nossa url \edit_annotations\<annotations.id>
+
+    onde tem annotations.id vai ser igual ao entry.id
 -->

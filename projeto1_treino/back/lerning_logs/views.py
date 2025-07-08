@@ -120,16 +120,33 @@ def new_annotations(request:HttpRequest,topic_id:str)->HttpResponse:
                 status=200)
  
 # Criando funcionalidade Update para a classe Entry  
-def edit_annotations(request:HttpRequest,annotations_id:str)->HttpResponse:
-        """Editar uma anotação existente"""
-        annotations_id_convertido = int(annotations_id) # convertendo de string para inteiro o nosso id rescebido dinâmicamente pela URL
-        annotations = Entry.objects.get(id = annotations_id_convertido) # pegando um objeto do banco de dados com id
-        topic = annotations.topic # puxando um objeto topic a apartir do annotations 
-        
-        # vamos reaproveitar a class EntryForm, ou seja, reaproveitar um formulário que já existe
-        if request.method != "POST":
-                annotations = EntryForm(instance=annotations) # retornar um formulário já preenchido com o que está em annotations 
-        else:
-            form = EntryForm(instance=annotations,data=request.POST) # pegando os dados preenchidos e atualizando com os dados enviados pela requisição POST
-                
-        
+def edit_annotations(request: HttpRequest, annotations_id: str) -> HttpResponse:
+    """Editar uma anotação existente"""
+    
+    annotations_id_convertido = int(annotations_id) # coonvertendo o id em inteiro
+    annotations = Entry.objects.get(id = annotations_id_convertido) # pegando um objeto do banco de dados com id
+    topic = annotations.topic  # Pega o tópico relacionado à anotação
+
+    if request.method != "POST":
+        form = EntryForm(instance=annotations)  # Formulário pré-preenchido com os dados atuais
+    else:
+        # se os formulário for um método POST, logo será atualizado os dados
+        form = EntryForm(instance=annotations, data=request.POST) # pegando os dados preenchidos e atualizando com os dados enviados pela requisição POST
+         # validando dados adiquiridos pelo formulário
+        if form.is_valid(): 
+            form.save() # salva dentro do banco de dados
+            return HttpResponseRedirect(reverse('topic', args=[topic.id])) # após validações redirecionar para página topic e passando como argumento da url e o id do topic
+ 
+    context = {'annotations':annotations,'topic':topic,'form':form}
+    return render ( 
+            request,
+            'lerning_logs/edit_annotations.html',
+            context= context, # constroi a página conforme os dados passado no dicinário de dados, icionário com dados para passar ao template (`{{ var }}` no HTML)
+            content_type='text/html',
+            status=200
+        )
+    
+
+# CRIANDO NOSSA PÁGINA DE LOGIN
+def login(resqust:HttpRequest)->HttpResponse:
+        pass

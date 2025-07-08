@@ -9,8 +9,15 @@
     <header> <!-- Div de cabeçalho da nossa página html -->
         <nav><!-- Criando uma navbar -->
             <!--Criando links -->    
-            <a href="{% url 'index' %}"><h1>DJANGO-APPLICATION</h1></a>
-            <a href="{% url 'topics' %}"><h1>Topicos</h1></a>
+            <p>
+                <a href="{% url 'index' %}"><h1>DJANGO-APPLICATION</h1></a>
+                <a href="{% url 'topics' %}"><h1>Topicos</h1></a>
+                {% if user.is_authenticated %} {# Verifica se existe um usuáruo autentificado! #}
+                    <p>Olá, <strong>{{user.username}}</strong> Login realizado com Sucesso</p>
+                {% else %}
+                    <a href = "{% url 'login' %}">Entrar, esse entrar vai redirecionar para a tela de login </a>
+                {% endif %}
+            </p>
         </nav>    
     </header>
 
