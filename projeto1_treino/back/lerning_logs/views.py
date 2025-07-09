@@ -147,6 +147,3 @@ def edit_annotations(request: HttpRequest, annotations_id: str) -> HttpResponse:
         )
     
 
-# CRIANDO NOSSA PÁGINA DE LOGIN
-def login(resqust:HttpRequest)->HttpResponse:
-        pass
