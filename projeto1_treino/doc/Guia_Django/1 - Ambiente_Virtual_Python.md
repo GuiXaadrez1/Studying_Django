@@ -47,7 +47,7 @@ obs.: se você estiver o python 3 instalado na sua máquina não precisa especí
 
 - No Windows:
 
-terminal CMD: .\venv\Scripts\activate.bat
+terminal CMD: venv\Scripts\activate
 
 se for terminal Power Shell use: .\venv\Scripts\Activate.ps1
 

@@ -16,6 +16,7 @@
                     <p>Olá, <strong>{{user.username}}</strong> Login realizado com Sucesso</p>
                     <a href="{% url 'logout' %}">Clique aqui para deslogar</a>
                 {% else %}
+                    <a href = "{% url 'cadastro' %}">Cadastrar usuário</a>
                     <a href = "{% url 'login' %}">Entrar, esse entrar vai redirecionar para a tela de login </a>
                 {% endif %}
             </p>

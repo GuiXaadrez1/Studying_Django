@@ -11,7 +11,6 @@ urlpatterns = [
     path('new_topic', views.new_topic, name = 'new_topic'), # criando caminho para o nosso formulário definido em forms.py que é um CREATE do CRUD
     path('new_annotations/<topic_id>', views.new_annotations, name = 'new_annotations'), # mesma coisa do de cima
     path('edit_annotations/<annotations_id>', views.edit_annotations, name='edit_annotations'),
-    path('login',views.login, name = 'login')
 ]
 
 '''

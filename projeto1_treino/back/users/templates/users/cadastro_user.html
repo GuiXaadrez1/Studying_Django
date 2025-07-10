@@ -1,0 +1,13 @@
+{% extends 'lerning_logs/base.html' %}
+
+{% block content %}
+
+    <form action = "{% url 'cadastro' %}" method = 'post'>
+        {% csrf_token %} {# tokem de segurança para formulário gerado pelo DJANGO, IMPRECENDÍVEL ESTAR AQUI#}
+        {{ form.as_p }} {# Cria e formata o nosso fomrulário no DJANGO #}
+        <!-- Senha do meu cadastro MinhaSenhaSegura2025 -->
+        <button name = "submit">Cadastrar</button>
+        <input type="hidden" name="next" value="{% url 'index' %}">{# basicamente envia os dados se validados redireciona para a página index #}
+    </form>
+
+{% endblock content %}

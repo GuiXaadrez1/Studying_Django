@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User # importando Class usuário, nativa do próprio Django
 
 # Crie os seus Models (Entidades do Banco de dados) aqui
 
@@ -7,8 +8,11 @@ class Topic(models.Model): # fazendo uma herança
     # definindo um atributo que será do tipo CharField com no máximo 200 caracteres, basicamente representa o nosso VARCHAR(200)
     text = models.CharField(max_length=200) 
     
-    # # definindo um atributo da nossa classe que vai automaticamente adicionar data e hora do nosso computador neste campo
-    date_added = models.DateTimeField(auto_now_add=True) 
+    # definindo um atributo da nossa classe que vai automaticamente adicionar data e hora do nosso computador neste campo
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+    # vinculando um dono a um tópico em específico
+    owner =  models.ForeignKey(User, on_delete=models.CASCADE) # Materializando o nosso usuário nativo como uma FK
     
     # crinado o nosso contrutor (opcional, não é obrigatório)
     def __init__(self, *args, **kwargs):

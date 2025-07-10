@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lerning_logs', # sempre colocar a nossa aplicação criada aqui para o DJANGO poder Rastrear
-    'users', # 
+    'users', #
 ]
 
 MIDDLEWARE = [
@@ -118,10 +118,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Redirecionamento após login bem-sucedido
-LOGIN_REDIRECT_URL = '/index'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirecionamento após login bem-sucedido
+LOGIN_REDIRECT_URL = '/index'
+
+# URL LOGIN PAGE, caminho para a nossa página de login
+LOGIN_URL = '/users/login'

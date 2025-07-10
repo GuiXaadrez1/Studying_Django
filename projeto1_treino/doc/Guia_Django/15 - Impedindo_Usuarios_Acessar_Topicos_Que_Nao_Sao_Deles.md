@@ -1,51 +1,29 @@
-# São funções ou classes que respondem às requisições HTTP.
+# Introdução
+Impedindo que usários acessem outros tópicos que não são os dele
 
-        # módulo
+## Primeiro vamos filtrar com a função filter() todos os objetos de um tópico
+
+@login_required
+def topics(request: HttpRequest)->HttpResponse: # essa função vai retornar um HttpResponse
+    """Página que mostra todos os assuntos """
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added') # ordenando todos os objetos pelas datas adicionadas
+    context = {'topics':topics} # crinado contexto que vamos jogar para o template
+    return render(request,'lerning_logs/topics.html', context)
+
+    - Isso não é suficiente, porque o usuário pode acessar asa informações de outros usuários através da url dinâmica: 'topic/<topic_id>/',
+
+## Impedindo os usuários acessar outras informações pela URL dinâmica, preste atenção no IF e ELSE
+
 from django.http import HttpRequest, HttpResponse
-
-# HttpRequest - É a classe que representa a requisição HTTP recebida do navegador.
-# Toda vez que um usuário acessa uma página no seu site, Django cria um objeto HttpRequest e o envia para a view correspondente.
-
-# HttpResponse - É a classe que representa a resposta que o Django envia de volta ao navegador.
-# Toda view Django deve retornar um HttpResponse (ou um objeto compatível).
-
-        # módulo                # funcao render
 from django.shortcuts import render
-
-        # módulo    # Class
-from .models import Topic,Entry # importando nossa Classe Topic e Entry de models para criar a view
-
-# lembre-se par acessar arquivos na mesma pasra use o . como no exemplo acima: .models
-
-# lembre-se que o models são as representações das nossas entidades do banco de dados
-# com base nisso, fazemos a ligação com o banco de dados, pois o banco está relacionado
-# ao model
-
-# Importando método do django que redireciona nossas rotas 
+from .models import Topic,Entry 
 from django.http import HttpResponseRedirect
-
-# Importando o método reverse, basicamente é vai renderizar nossa página apartir de um nome específico de url
 from django.urls import reverse
-
-# Importando o nosso formulário criado em forms.py
 from .forms import TopicForm, EntryForm
-
-
-from django.contrib.auth.decorators import login_required # método nativo que restringe páginas a quem está logado, um decorator, ele redireciona o usuário não logado para a página login
-'''
-    Um decorator é uma forma simples de alterar o comportamento de uma função sem ter a necessidade de modificar o código
-'''
-
+from django.contrib.auth.decorators import login_required
 from django.http import Http404 # Classe nativa do Django que renderiza uma página 404
 
 
-@login_required # usando o nosso decorador
-def index(request:HttpRequest)->HttpResponse:
-    """Página principal do lerning_log"""
-    return render(request, 'lerning_logs/index.html') # a função render vai renderizar uma página html para o navegador do usuário
-
-
-# Criando a view topics, função que retorna todos os nossos topicos
 @login_required
 def topics(request: HttpRequest)->HttpResponse: # essa função vai retornar um HttpResponse
     """Página que mostra todos os assuntos """
@@ -54,7 +32,6 @@ def topics(request: HttpRequest)->HttpResponse: # essa função vai retornar um 
     context = {'topics':topics} # crinado contexto que vamos jogar para o template
     return render(request,'lerning_logs/topics.html', context)
 
-# Criando uma view para acessar um tópico específico pela url <-> url dinâmico
 @login_required
 def topic(request:HttpRequest,topic_id:str)->HttpResponse:
     """Página que mostra todos os topicos (assuntos) e as anotações referente ao mesmo"""
@@ -76,11 +53,7 @@ def topic(request:HttpRequest,topic_id:str)->HttpResponse:
         content_type='text/html',
         status=200)
 
-# essa função, view basicamente vai listar um topic com todas as suas anotações com base
-# na variável determinada na url
 
-
-# Criando view que irá renderizar o meu formulário criado em form.py
 @login_required
 def new_topic(request:HttpRequest)->HttpResponse:
         """ Adiciona um novo Tópico através de um formulário """
@@ -105,7 +78,6 @@ def new_topic(request:HttpRequest)->HttpResponse:
         context = {'form':form}
         return render(request,'lerning_logs/new_topic.html',context,content_type='text/html',status=201)
 
-# Craindo view para o nosso formulário Entryform
 @login_required
 def new_annotations(request:HttpRequest,topic_id:str)->HttpResponse:
         """ Acrescenta uma nova anotação no banco de dados """
@@ -144,7 +116,6 @@ def new_annotations(request:HttpRequest,topic_id:str)->HttpResponse:
                 context=context,content_type='text/html',
                 status=200)
  
-# Criando funcionalidade Update para a classe Entry  
 @login_required
 def edit_annotations(request: HttpRequest, annotations_id: str) -> HttpResponse:
     """Editar uma anotação existente"""
@@ -173,6 +144,7 @@ def edit_annotations(request: HttpRequest, annotations_id: str) -> HttpResponse:
             context= context, # constroi a página conforme os dados passado no dicinário de dados, icionário com dados para passar ao template (`{{ var }}` no HTML)
             content_type='text/html',
             status=200
-        )
-    
+    )
 
+
+## Modificando a view new_topic para quando um usuario criar um novo topico, esse novo topico criado seja atribuido a ele
